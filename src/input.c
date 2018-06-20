@@ -1243,6 +1243,11 @@ GLFWAPI int glfwGetGamepadState(int jid, GLFWgamepadstate* state)
         {
             const float value = js->axes[e->index] * e->axisScale + e->axisOffset;
             state->axes[i] = fminf(fmaxf(value, -1.f), 1.f);
+            if (i == GLFW_GAMEPAD_AXIS_LEFT_TRIGGER ||
+                i == GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER)
+            {
+                state->axes[i] = (state->axes[i] + 1.f) / 2.f;
+            }
         }
         else if (e->type == _GLFW_JOYSTICK_HATBIT)
         {
